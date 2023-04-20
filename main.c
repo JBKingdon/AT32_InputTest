@@ -47,8 +47,8 @@
 
 
 // 1
-// 8	3	3	C08	fail	reads 4394
-// .	4	3	C09	fail	reads 4394
+// 8	3	3	C08	pass
+// .	4	3	C09	pass
 // 20
 
 
@@ -87,39 +87,37 @@
 //#define INPUT_MUXn		GPIO_MUX_2
 
 // tim5, mux2 is pins A0 through A3 - check at-start schematic
-// A0 is user key, should be ok, but has a 100k pull down on it
-// works
-#define INPUT_TIMER		TMR5
-#define INPUT_PORT		GPIOA
-#define INPUT_PIN		GPIO_PINS_0
-#define INPUT_SEL_CH	TMR_SELECT_CHANNEL_1
-#define INPUT_CH_FLAG	TMR_C1_FLAG
-#define INPUT_INT		TMR_C1_INT
-#define INPUT_IRQn		TMR5_GLOBAL_IRQn
-
-#define INPUT_TIMER_CLK	CRM_TMR5_PERIPH_CLOCK
-#define INPUT_PIN_CLK	CRM_GPIOA_PERIPH_CLOCK
-
-#define INPUT_MUX_SRC	GPIO_PINS_SOURCE0
-#define INPUT_MUXn		GPIO_MUX_2
-
-
-//// tim8, ch4, c09, mux3	-- returns the wrong result, 4394. why?
-//// Try time 8 ch3 for comparison, on C08 mux3. 4394 on ch3 too, so something odd about tmr8
-//// tim8 is an advanced timer, maybe try another general purpose timer (2 through 5)
-//#define INPUT_TIMER		TMR8
-//#define INPUT_PORT		GPIOC
-//#define INPUT_PIN		GPIO_PINS_8
-//#define INPUT_SEL_CH	TMR_SELECT_CHANNEL_3
-//#define INPUT_CH_FLAG	TMR_C3_FLAG
-//#define INPUT_INT		TMR_C3_INT
-//#define INPUT_IRQn		TMR8_CH_IRQn
+// A0 - works
+//#define INPUT_TIMER		TMR5
+//#define INPUT_PORT		GPIOA
+//#define INPUT_PIN		GPIO_PINS_0
+//#define INPUT_SEL_CH	TMR_SELECT_CHANNEL_1
+//#define INPUT_CH_FLAG	TMR_C1_FLAG
+//#define INPUT_INT		TMR_C1_INT
+//#define INPUT_IRQn		TMR5_GLOBAL_IRQn
 //
-//#define INPUT_TIMER_CLK	CRM_TMR8_PERIPH_CLOCK
-//#define INPUT_PIN_CLK	CRM_GPIOC_PERIPH_CLOCK
+//#define INPUT_TIMER_CLK	CRM_TMR5_PERIPH_CLOCK
+//#define INPUT_PIN_CLK	CRM_GPIOA_PERIPH_CLOCK
 //
-//#define INPUT_MUX_SRC	GPIO_PINS_SOURCE8
-//#define INPUT_MUXn		GPIO_MUX_3
+//#define INPUT_MUX_SRC	GPIO_PINS_SOURCE0
+//#define INPUT_MUXn		GPIO_MUX_2
+
+
+// tim8, ch4, c09, mux3	-- works
+
+#define INPUT_TIMER		TMR8
+#define INPUT_PORT		GPIOC
+#define INPUT_PIN		GPIO_PINS_9
+#define INPUT_SEL_CH	TMR_SELECT_CHANNEL_4
+#define INPUT_CH_FLAG	TMR_C4_FLAG
+#define INPUT_INT		TMR_C4_INT
+#define INPUT_IRQn		TMR8_CH_IRQn
+
+#define INPUT_TIMER_CLK	CRM_TMR8_PERIPH_CLOCK
+#define INPUT_PIN_CLK	CRM_GPIOC_PERIPH_CLOCK
+
+#define INPUT_MUX_SRC	GPIO_PINS_SOURCE9
+#define INPUT_MUXn		GPIO_MUX_3
 
 
 // Globals
@@ -355,8 +353,8 @@ void TMR5_GLOBAL_IRQHandler(void)
 }
 
 
-//void TMR8_CH_IRQHandler(void)
-//{
-//	genericTimerInterrupt();
-//}
+void TMR8_CH_IRQHandler(void)
+{
+	genericTimerInterrupt();
+}
 
