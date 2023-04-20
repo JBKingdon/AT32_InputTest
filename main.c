@@ -43,7 +43,7 @@
 // 3	2	2	A07	pass
 // .	4	2	C09	pass
 // 4
-// 5	1	2	A00	fail	reads 4394
+// 5	1	2	A00	pass
 
 
 // 1
@@ -57,19 +57,19 @@
 // Original config is timer3, ch2, A07 - works, returns 36k
 // NB if changing the timer, make sure there is an interrupt handler for it
 
-#define INPUT_TIMER		TMR3
-#define INPUT_PORT		GPIOA
-#define INPUT_PIN		GPIO_PINS_7
-#define INPUT_SEL_CH	TMR_SELECT_CHANNEL_2
-#define INPUT_CH_FLAG	TMR_C2_FLAG
-#define INPUT_INT		TMR_C2_INT
-#define INPUT_IRQn		TMR3_GLOBAL_IRQn
-
-#define INPUT_TIMER_CLK	CRM_TMR3_PERIPH_CLOCK
-#define INPUT_PIN_CLK	CRM_GPIOA_PERIPH_CLOCK
-
-#define INPUT_MUX_SRC	GPIO_PINS_SOURCE7
-#define INPUT_MUXn		GPIO_MUX_2
+//#define INPUT_TIMER		TMR3
+//#define INPUT_PORT		GPIOA
+//#define INPUT_PIN		GPIO_PINS_7
+//#define INPUT_SEL_CH	TMR_SELECT_CHANNEL_2
+//#define INPUT_CH_FLAG	TMR_C2_FLAG
+//#define INPUT_INT		TMR_C2_INT
+//#define INPUT_IRQn		TMR3_GLOBAL_IRQn
+//
+//#define INPUT_TIMER_CLK	CRM_TMR3_PERIPH_CLOCK
+//#define INPUT_PIN_CLK	CRM_GPIOA_PERIPH_CLOCK
+//
+//#define INPUT_MUX_SRC	GPIO_PINS_SOURCE7
+//#define INPUT_MUXn		GPIO_MUX_2
 
 //// tim3, ch4, c09, mux2 - works
 //#define INPUT_TIMER		TMR3
@@ -88,20 +88,20 @@
 
 // tim5, mux2 is pins A0 through A3 - check at-start schematic
 // A0 is user key, should be ok, but has a 100k pull down on it
-// Also reads 4394 instead of the expected 36k
-//#define INPUT_TIMER		TMR5
-//#define INPUT_PORT		GPIOA
-//#define INPUT_PIN		GPIO_PINS_0
-//#define INPUT_SEL_CH	TMR_SELECT_CHANNEL_1
-//#define INPUT_CH_FLAG	TMR_C1_FLAG
-//#define INPUT_INT		TMR_C1_INT
-//#define INPUT_IRQn		TMR5_GLOBAL_IRQn
-//
-//#define INPUT_TIMER_CLK	CRM_TMR5_PERIPH_CLOCK
-//#define INPUT_PIN_CLK	CRM_GPIOA_PERIPH_CLOCK
-//
-//#define INPUT_MUX_SRC	GPIO_PINS_SOURCE0
-//#define INPUT_MUXn		GPIO_MUX_2
+// works
+#define INPUT_TIMER		TMR5
+#define INPUT_PORT		GPIOA
+#define INPUT_PIN		GPIO_PINS_0
+#define INPUT_SEL_CH	TMR_SELECT_CHANNEL_1
+#define INPUT_CH_FLAG	TMR_C1_FLAG
+#define INPUT_INT		TMR_C1_INT
+#define INPUT_IRQn		TMR5_GLOBAL_IRQn
+
+#define INPUT_TIMER_CLK	CRM_TMR5_PERIPH_CLOCK
+#define INPUT_PIN_CLK	CRM_GPIOA_PERIPH_CLOCK
+
+#define INPUT_MUX_SRC	GPIO_PINS_SOURCE0
+#define INPUT_MUXn		GPIO_MUX_2
 
 
 //// tim8, ch4, c09, mux3	-- returns the wrong result, 4394. why?
@@ -207,7 +207,7 @@ void startInputCapture(void)
 	tmr_input_config_struct.input_mapped_select = TMR_CC_CHANNEL_MAPPED_DIRECT;
 	tmr_input_config_struct.input_polarity_select = TMR_INPUT_RISING_EDGE;
 	tmr_input_config_struct.input_filter_value = 2;
-	tmr_input_channel_init(TMR3, &tmr_input_config_struct, TMR_CHANNEL_INPUT_DIV_1);
+	tmr_input_channel_init(INPUT_TIMER, &tmr_input_config_struct, TMR_CHANNEL_INPUT_DIV_1);
 
 	tmr_interrupt_enable(INPUT_TIMER, INPUT_INT, TRUE);
 
